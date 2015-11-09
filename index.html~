@@ -41,7 +41,7 @@
               <nav>
                 <ul class="nav masthead-nav">
                   <li class="active"><a href="#">Home</a></li>
-                  <li><a href="#">Features</a></li>
+                  <li><a href="emberjs_210.html">Features</a></li>
                   <li><a href="#">Contact</a></li>
                 </ul>
               </nav>
@@ -49,10 +49,10 @@
           </div>
 
           <div class="inner cover">
-            <h1 class="cover-heading">Cover your page.</h1>
-            <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+            <h1 class="cover-heading">My learnings on new digital topics</h1>
+            <p class="lead">Emerging IT topics in the digital world are not only fascinating but at times overwhelming to experienced professionals. I have tried to put my journey notes here.</p>
             <p class="lead">
-              <a href="#" class="btn btn-lg btn-default">Learn more</a>
+              <a href="#" class="btn btn-lg btn-default">Features</a>
             </p>
           </div>
 

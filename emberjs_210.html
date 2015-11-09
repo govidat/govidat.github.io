@@ -1,0 +1,1665 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Ember.js ver 2.1.0 &ndash; TODO MVC App with Bootstrap </title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2015-11-09 17:52:53 IST"/>
+<meta name="author" content="R GOVINDARAJAN"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+
+<h1 class="title">Ember.js ver 2.1.0 &ndash; TODO MVC App with Bootstrap </h1>
+
+<p><a href="https://github.com/govidat/todo-mvc-ember-2.1.0">https://github.com/govidat/todo-mvc-ember-2.1.0</a>
+</p>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Steps to build Ember.js TODO MVC App </a>
+<ul>
+<li><a href="#sec-1.1">1.1 Setup </a>
+<ul>
+<li><a href="#sec-1.1.1">1.1.1 Setup Ember </a></li>
+<li><a href="#sec-1.1.2">1.1.2 Setup Bootstrap </a></li>
+</ul>
+</li>
+<li><a href="#sec-1.2">1.2 First level UI for home page - static data </a>
+<ul>
+<li><a href="#sec-1.2.1">1.2.1 Refactor - move code from application template to index template </a></li>
+<li><a href="#sec-1.2.2">1.2.2 NOTE: default router.js is as is. No change required. </a></li>
+<li><a href="#sec-1.2.3">1.2.3 git "initiate setup" </a></li>
+</ul>
+</li>
+<li><a href="#sec-1.3">1.3 Creating the Todo Model </a>
+<ul>
+<li><a href="#sec-1.3.1">1.3.1 Adding infrastructure for fixtures </a></li>
+<li><a href="#sec-1.3.2">1.3.2 Adding adapter for fixtures </a></li>
+<li><a href="#sec-1.3.3">1.3.3 Update the Todo Model and add fixtures </a></li>
+</ul>
+</li>
+<li><a href="#sec-1.4">1.4 Create Route and Components </a>
+<ul>
+<li><a href="#sec-1.4.1">1.4.1 Create the todos-route component </a></li>
+<li><a href="#sec-1.4.2">1.4.2 Extra info: </a></li>
+<li><a href="#sec-1.4.3">1.4.3 Instantiate the component from the application template </a></li>
+<li><a href="#sec-1.4.4">1.4.4 Displaying Model data </a></li>
+<li><a href="#sec-1.4.5">1.4.5 git "display model data" </a></li>
+</ul>
+</li>
+<li><a href="#sec-1.5">1.5 Rewire the display of model </a>
+<ul>
+<li><a href="#sec-1.5.1">1.5.1 Displaying "completed" status for Tasks </a></li>
+<li><a href="#sec-1.5.2">1.5.2 Rewire UI to create new todo entries </a></li>
+<li><a href="#sec-1.5.3">1.5.3 Introduce the Todos-route component's controller </a></li>
+<li><a href="#sec-1.5.4">1.5.4 Refactoring the todos-route component into sub components </a></li>
+<li><a href="#sec-1.5.5">1.5.5 Generate the components </a></li>
+<li><a href="#sec-1.5.6">1.5.6 Instantiate a todos-list component from the todos-route </a></li>
+<li><a href="#sec-1.5.7">1.5.7 Update the template for the todos-list </a></li>
+<li><a href="#sec-1.5.8">1.5.8 Update the component code for todos-list </a></li>
+<li><a href="#sec-1.5.9">1.5.9 Update the template for todo-item </a></li>
+<li><a href="#sec-1.5.10">1.5.10 Update the component code for todo-item </a></li>
+<li><a href="#sec-1.5.11">1.5.11 Enabling strike through for completed items </a></li>
+<li><a href="#sec-1.5.12">1.5.12 Displaying the number of todos left </a></li>
+<li><a href="#sec-1.5.13">1.5.13 Add the active variable in the todos-route component body </a></li>
+<li><a href="#sec-1.5.14">1.5.14 Add an inflection computed property </a></li>
+<li><a href="#sec-1.5.15">1.5.15 Update the template </a></li>
+<li><a href="#sec-1.5.16">1.5.16 git "display model rewire UI" </a></li>
+</ul>
+</li>
+<li><a href="#sec-1.6">1.6 Rewire for filters </a>
+<ul>
+<li><a href="#sec-1.6.1">1.6.1 Editing todos </a></li>
+<li><a href="#sec-1.6.2">1.6.2 Adding a new component </a></li>
+<li><a href="#sec-1.6.3">1.6.3 Prepare todo-item template to call the new component </a></li>
+<li><a href="#sec-1.6.4">1.6.4 Ready todo-item component to handle new actions </a></li>
+<li><a href="#sec-1.6.5">1.6.5 Deleting todo items </a></li>
+<li><a href="#sec-1.6.6">1.6.6 Prepare removeTodo function in todo-item component code </a></li>
+<li><a href="#sec-1.6.7">1.6.7 Creating multiple pages with persistent filtering </a></li>
+<li><a href="#sec-1.6.8">1.6.8 Enable controller to accept query params </a></li>
+<li><a href="#sec-1.6.9">1.6.9 Pass in the obtained query params to the main component to work with: </a></li>
+<li><a href="#sec-1.6.10">1.6.10 Use filter value to compute the list of todos to be diaplyed in todos-route component </a></li>
+<li><a href="#sec-1.6.11">1.6.11 Update the input to the inner display component 'todos-list' to the filtered list </a></li>
+<li><a href="#sec-1.6.12">1.6.12 Update the links from todos-route template to use this new tech </a></li>
+<li><a href="#sec-1.6.13">1.6.13 git "display filters" </a></li>
+</ul>
+</li>
+<li><a href="#sec-1.7">1.7 Last few steps </a>
+<ul>
+<li><a href="#sec-1.7.1">1.7.1 Clearing all completed todos </a></li>
+<li><a href="#sec-1.7.2">1.7.2 Add the UI template </a></li>
+<li><a href="#sec-1.7.3">1.7.3 Add the clearCompleted action </a></li>
+<li><a href="#sec-1.7.4">1.7.4 One shot global completed status toggle </a></li>
+<li><a href="#sec-1.7.5">1.7.5 Add the global check box </a></li>
+<li><a href="#sec-1.7.6">1.7.6 Give the component the tech to mark and identify marked state </a></li>
+<li><a href="#sec-1.7.7">1.7.7 git "almost done" </a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Steps to build Ember.js TODO MVC App </h2>
+<div class="outline-text-2" id="text-1">
+
+
+</div>
+
+<div id="outline-container-1.1" class="outline-3">
+<h3 id="sec-1.1"><span class="section-number-3">1.1</span> Setup </h3>
+<div class="outline-text-3" id="text-1.1">
+
+<p>The respository for this is in:
+<a href="https://github.com/govidat/todo-mvc-ember-2.1.0">https://github.com/govidat/todo-mvc-ember-2.1.0</a>
+</p>
+
+</div>
+
+<div id="outline-container-1.1.1" class="outline-4">
+<h4 id="sec-1.1.1"><span class="section-number-4">1.1.1</span> Setup Ember </h4>
+<div class="outline-text-4" id="text-1.1.1">
+
+<p>If you already have an ember-cli version installed then to migrate to the latest version pls refer:
+<a href="https://github.com/ember-cli/ember-cli/releases">https://github.com/ember-cli/ember-cli/releases</a>
+</p>
+<p>
+Also refer the below link to ensure that npm has write access:
+<a href="https://docs.npmjs.com/getting-started/fixing-npm-permissions">https://docs.npmjs.com/getting-started/fixing-npm-permissions</a>
+</p>
+
+
+<pre class="example">$ npm install -g ember-cli@1.13.8
+$ npm install -g phantomjs 
+$ npm install -g bower 
+</pre>
+
+
+
+
+<p>
+Install Ember Inspector and usage of this is beyond the scope of this note.
+</p>
+<p>
+In some cases you may get a "Watchman error" and the steps to remove this :
+<a href="http://discuss.emberjs.com/t/could-not-find-watchman-falling-back-to-nodewatcher-for-file-system-events/6873">http://discuss.emberjs.com/t/could-not-find-watchman-falling-back-to-nodewatcher-for-file-system-events/6873</a>
+<a href="https://facebook.github.io/watchman/docs/install.html">https://facebook.github.io/watchman/docs/install.html</a>
+</p>
+
+
+
+<pre class="example">$ ember -v
+version: 1.13.8
+node: 0.13.0-pre
+npm: 2.13.4
+
+$ ember new a210-todo
+</pre>
+
+
+
+
+<p>
+Ember-cli 1.13.8 still defaults older ember versions. We can manually change that to newer versions as follows:
+</p>
+
+<p>
+edit bower.json
+change
+ember to 2.1.0
+ember-data to 2.1.0
+</p>
+
+
+
+<pre class="example">{
+  "name": "a210-todo",
+  "dependencies": {
+    "bootstrap-sass": "~3.3.5",
+    "ember": "2.1.0",
+    "ember-cli-shims": "ember-cli/ember-cli-shims#0.0.3",
+    "ember-cli-test-loader": "ember-cli-test-loader#0.1.3",
+    "ember-data": "2.1.0",
+    "ember-load-initializers": "ember-cli/ember-load-initializers#0.1.5",
+    "ember-qunit": "0.4.9",
+    "ember-qunit-notifications": "0.0.7",
+    "ember-resolver": "~0.1.18",
+    "jquery": "^1.11.3",
+    "loader.js": "ember-cli/loader.js#3.2.1",
+    "qunit": "~1.18.0"
+  },
+  "resolutions": {
+    "ember": "2.1.0"
+  }
+}
+</pre>
+
+
+
+
+<p>
+Change directory to this new folder a210-todo
+</p>
+
+
+<pre class="example">$ bower install
+choose !3
+
+$ ember server
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.1.2" class="outline-4">
+<h4 id="sec-1.1.2"><span class="section-number-4">1.1.2</span> Setup Bootstrap </h4>
+<div class="outline-text-4" id="text-1.1.2">
+
+<p>In this document we will use twitter Bootsrap to design our app.
+</p>
+<p>
+There are multiple ways as referred in :
+<a href="http://www.netosober.io/bootstrap/emberjs/embercli/2015/07/16/emberjs-styling-wtih-bootstrap/">http://www.netosober.io/bootstrap/emberjs/embercli/2015/07/16/emberjs-styling-wtih-bootstrap/</a>
+</p>
+<p>
+We will add Bootstrap using bower with sass
+Before installing Bootstrap with SASS, our application needs to be setup to use SASS. 
+We’ll use the following command to add SASS compilation to our app:
+</p>
+
+
+
+<pre class="example">$ ember install ember-cli-sass
+$ bower install bootstrap-sass --save
+</pre>
+
+
+
+
+<p>
+Edit /ember-cli-build.js
+</p>
+
+
+<pre class="example">/* global require, module */
+var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+
+module.exports = function(defaults) {
+  var app = new EmberApp(defaults, {
+    // Add options here
+      sassOptions: {
+        includePaths: [
+          'bower_components/bootstrap-sass/assets/stylesheets'
+
+        ]
+      }
+  });
+
+  app.import('bower_components/bootstrap-sass/assets/javascripts/bootstrap.js');
+
+/*
+  app.import('bower_components/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.eot' , {destDir: '/fonts/bootstrap'});
+  app.import('bower_components/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf' , {destDir: '/fonts/bootstrap'});
+  app.import('bower_components/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.svg' , {destDir: '/fonts/bootstrap'});
+  app.import('bower_components/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff' , {destDir: '/fonts/bootstrap'});
+  app.import('bower_components/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff2' , {destDir: '/fonts/bootstrap'});
+*/
+
+  return app.toTree();
+};
+
+</pre>
+
+
+
+
+<p>
+Rename app/styles/app.css to app.scss
+Edit app.scss and include the following to import Bootstrap:
+</p>
+
+
+
+<pre class="example">@import "bootstrap";
+@import "bootstrap/theme";
+@import "bootstrap/glyphicons";
+</pre>
+
+
+
+
+<p>
+Glyphicons did not display correctly.
+Added the above commented lines and it started working. Commented them again and it continues to work. 
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1.2" class="outline-3">
+<h3 id="sec-1.2"><span class="section-number-3">1.2</span> First level UI for home page - static data </h3>
+<div class="outline-text-3" id="text-1.2">
+
+<p>Edit templates/application.hbs
+</p>
+
+
+<pre class="example">&lt;div class="row"&gt;
+  &lt;div class="col-md-3"&gt;&lt;/div&gt;
+  &lt;div class="col-md-6"&gt;
+    &lt;br/&gt;
+  &lt;h1 class="text-center"&gt;todos&lt;/h1&gt;
+    &lt;section class="well"&gt;
+      &lt;div class="input-group "&gt;
+        &lt;span class='input-group-addon'&gt;
+        &lt;input type="text" id="new-todo" placeholder="What needs to be done?" /&gt;
+        &lt;/span&gt;
+      &lt;/div&gt;
+        
+      &lt;div class="list-group-item"&gt;
+ 
+        &lt;input type="checkbox" class="toggle"&gt;
+        &lt;label&gt;Learn Ember.js&lt;/label&gt;
+        &lt;button class='btn btn-default btn-xs pull-right'&gt;
+          &lt;span class="glyphicon glyphicon-remove" aria-hidden="true"&gt;&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;br/&gt;
+        &lt;input type="checkbox" class="toggle"&gt;
+        &lt;label&gt;...&lt;/label&gt;
+        &lt;button class='btn btn-default btn-xs pull-right'&gt;
+          &lt;span class="glyphicon glyphicon-remove" aria-hidden="true"&gt;&lt;/span&gt;
+        &lt;/button&gt;       
+        &lt;br/&gt;
+        &lt;input type="checkbox" class="toggle"&gt;
+        &lt;label&gt;Profit!&lt;/label&gt;
+        &lt;button class='btn btn-default btn-xs pull-right'&gt;
+          &lt;span class="glyphicon glyphicon-remove" aria-hidden="true"&gt;&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;br/&gt;
+      &lt;/div&gt;
+
+      &lt;footer class="footer"&gt;
+        &lt;span&gt;
+          &lt;strong&gt;2&lt;/strong&gt; todos left
+        &lt;/span&gt;
+
+        &lt;div class="btn-group" role="group"&gt;
+          &lt;a href="all" class="selected"&gt;All&lt;/a&gt;
+          &lt;a href="active"&gt;Active&lt;/a&gt;
+          &lt;a href="completed"&gt;Completed&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;span class="btn btn-default pull-right"&gt;
+          Clear completed (1)
+        &lt;/span&gt;
+      &lt;/footer&gt;
+    &lt;/section&gt;
+</pre>
+
+
+
+
+<p>
+In your browser start session localhost:4200
+This displays our active session from ember server.
+</p>
+
+</div>
+
+<div id="outline-container-1.2.1" class="outline-4">
+<h4 id="sec-1.2.1"><span class="section-number-4">1.2.1</span> Refactor - move code from application template to index template </h4>
+<div class="outline-text-4" id="text-1.2.1">
+
+<p>move code from application.hbs to index.hbs
+</p>
+
+
+<pre class="example">application template now has a simple {{ outlet }}
+</pre>
+
+
+
+<p>
+<img src="./img/a210fig1.png"  alt="./img/a210fig1.png" />
+</p></div>
+
+</div>
+
+<div id="outline-container-1.2.2" class="outline-4">
+<h4 id="sec-1.2.2"><span class="section-number-4">1.2.2</span> NOTE: default router.js is as is. No change required. </h4>
+<div class="outline-text-4" id="text-1.2.2">
+
+</div>
+
+</div>
+
+<div id="outline-container-1.2.3" class="outline-4">
+<h4 id="sec-1.2.3"><span class="section-number-4">1.2.3</span> git "initiate setup" </h4>
+<div class="outline-text-4" id="text-1.2.3">
+
+
+
+
+<pre class="example">$ git add -A
+$ git commit -m "initiate setup"
+</pre>
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1.3" class="outline-3">
+<h3 id="sec-1.3"><span class="section-number-3">1.3</span> Creating the Todo Model </h3>
+<div class="outline-text-3" id="text-1.3">
+
+
+
+
+<pre class="example">$ ember generate model todo title:string iscompleted:boolean
+</pre>
+
+
+
+<p>
+This has done " create app/models/todo.js "
+</p>
+</div>
+
+<div id="outline-container-1.3.1" class="outline-4">
+<h4 id="sec-1.3.1"><span class="section-number-4">1.3.1</span> Adding infrastructure for fixtures </h4>
+<div class="outline-text-4" id="text-1.3.1">
+
+
+<p>
+Let us introduced fixture adapter and this can be used as an addon using:
+</p>
+
+
+<pre class="example">$ ember install ember-data-fixture-adapter
+</pre>
+
+
+
+<p>
+uses npm and istalls the package (need to have internet connectivity)
+This got added to package.json
+</p>
+<p>
+Abort the server using Ctrl C and then reload ember server.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1.3.2" class="outline-4">
+<h4 id="sec-1.3.2"><span class="section-number-4">1.3.2</span> Adding adapter for fixtures </h4>
+<div class="outline-text-4" id="text-1.3.2">
+
+
+
+
+<pre class="example">$ ember generate adapter application
+</pre>
+
+
+
+
+<p>
+This introduces app/adapters/application.js
+Replace file contents with following:
+</p>
+
+
+<pre class="example">export { default } from 'ember-data-fixture-adapter';
+</pre>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.3.3" class="outline-4">
+<h4 id="sec-1.3.3"><span class="section-number-4">1.3.3</span> Update the Todo Model and add fixtures </h4>
+<div class="outline-text-4" id="text-1.3.3">
+
+<p>Replace contents of app/models/todo.js
+</p>
+
+
+<pre class="example">import DS from 'ember-data';
+
+var Todo = DS.Model.extend({
+  title: DS.attr('string'),
+  isCompleted: DS.attr('boolean', { defaultValue: false })
+}); 
+
+Todo.reopenClass({
+  FIXTURES: [
+  {
+    id: 1,
+    title: 'Learn Ember2.js',
+    isCompleted: true
+  },
+  {
+    id: 2,
+    title: '...',
+    isCompleted: false
+  },
+  {
+    id: 3,
+    title: 'Profit!',
+    isCompleted: false
+  }
+  ]
+});
+
+export default Todo;
+</pre>
+
+
+
+<p>
+Static data continues to get displayed in browser. NOT THE FIXTURE DATA.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1.4" class="outline-3">
+<h3 id="sec-1.4"><span class="section-number-3">1.4</span> Create Route and Components </h3>
+<div class="outline-text-3" id="text-1.4">
+
+
+
+
+<pre class="example">export default Ember.Route.extend({
+
+    model() {
+      return this.store.findAll('todo')
+    }
+});
+</pre>
+
+
+
+
+</div>
+
+<div id="outline-container-1.4.1" class="outline-4">
+<h4 id="sec-1.4.1"><span class="section-number-4">1.4.1</span> Create the todos-route component </h4>
+<div class="outline-text-4" id="text-1.4.1">
+
+
+
+
+<pre class="example">ember generate component todos-route
+</pre>
+
+
+
+<p>
+This generates:
+create app/components/todos-route.js
+create app/templates/components/todos-route.hbs
+</p>
+<p>
+put the content of index.hbs into todos-route.hbs and delete index.hbs
+</p>
+<p>
+todos-route.js can be retained at the default code, as presently we are not doing any futher control. 
+</p>
+<p>
+localhost:4200 will go blank
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1.4.2" class="outline-4">
+<h4 id="sec-1.4.2"><span class="section-number-4">1.4.2</span> Extra info: </h4>
+<div class="outline-text-4" id="text-1.4.2">
+
+<p>Edit todos-route.js
+</p>
+
+
+<pre class="example">import Ember from 'ember';
+export default Ember.Component.extend({
+//  tagName: 'ul',
+});
+</pre>
+
+
+
+<p>
+We can pass on some details like "tagName".
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1.4.3" class="outline-4">
+<h4 id="sec-1.4.3"><span class="section-number-4">1.4.3</span> Instantiate the component from the application template </h4>
+<div class="outline-text-4" id="text-1.4.3">
+
+<p>Replace contents of application.hbs with
+</p>
+
+
+<pre class="example">{{todos-route todos=model}}
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.4.4" class="outline-4">
+<h4 id="sec-1.4.4"><span class="section-number-4">1.4.4</span> Displaying Model data </h4>
+<div class="outline-text-4" id="text-1.4.4">
+
+
+<p>
+Replace the data/list/static data section in "app/templates/components/todos-route.hbs" with follows:
+</p>
+
+
+<pre class="example">&lt;div class="list-group-item"&gt;
+  
+  {{#each todos as |todo|}}
+
+    &lt;input type="checkbox" class="toggle"&gt;
+    &lt;label&gt;{{todo.title}}&lt;/label&gt;
+    &lt;button class='btn btn-default btn-xs pull-right'&gt;
+    &lt;span class="glyphicon glyphicon-remove" aria-hidden="true"&gt;&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;br/&gt;
+  {{/each}}
+
+&lt;/div&gt;
+</pre>
+
+
+
+<p>
+The home page should now display todo items from the model fixtures.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1.4.5" class="outline-4">
+<h4 id="sec-1.4.5"><span class="section-number-4">1.4.5</span> git "display model data" </h4>
+<div class="outline-text-4" id="text-1.4.5">
+
+
+
+
+<pre class="example">$ git add -A
+$ git commit -m "display model data"
+</pre>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1.5" class="outline-3">
+<h3 id="sec-1.5"><span class="section-number-3">1.5</span> Rewire the display of model </h3>
+<div class="outline-text-3" id="text-1.5">
+
+
+</div>
+
+<div id="outline-container-1.5.1" class="outline-4">
+<h4 id="sec-1.5.1"><span class="section-number-4">1.5.1</span> Displaying "completed" status for Tasks </h4>
+<div class="outline-text-4" id="text-1.5.1">
+
+
+<p>
+Change the former in app/templates/components/todos-route.hbs to the latter: 
+</p>
+
+
+<pre class="example">&lt;input type="checkbox" class="toggle"&gt;
+
+{{input type='checkbox' checked=todo.isCompleted class='toggle'}}
+</pre>
+
+
+
+<p>
+strike through still does not work as the div has been defined at a different level in the exercise.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1.5.2" class="outline-4">
+<h4 id="sec-1.5.2"><span class="section-number-4">1.5.2</span> Rewire UI to create new todo entries </h4>
+<div class="outline-text-4" id="text-1.5.2">
+
+
+<p>
+Replace this in app/application/templates/components/todos-route.hbs
+</p>
+
+
+<pre class="example">&lt;input type="text" id="new-todo" placeholder="What needs to be done?" /&gt;
+</pre>
+
+
+
+<p>
+with this:
+</p>
+
+
+<pre class="example">{{input type='text'
+            placeholder='What needs to be done?'
+            value=newTitle
+            enter='createTodo'}}
+</pre>
+
+
+
+
+<p>
+This does not actually create the todo entry, only UI in place. The action 'createTodo' has not yet been created.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1.5.3" class="outline-4">
+<h4 id="sec-1.5.3"><span class="section-number-4">1.5.3</span> Introduce the Todos-route component's controller </h4>
+<div class="outline-text-4" id="text-1.5.3">
+
+
+<p>
+Change app/components/todos-route.js from :
+</p>
+
+
+<pre class="example">export default Ember.Component.extend({
+});
+</pre>
+
+
+
+<p>
+to:
+</p>
+
+
+<pre class="example">const {
+  inject: { service }
+} = Ember;
+
+export default Ember.Component.extend({
+  tagName: 'ul',
+
+  store: service(),
+
+  actions: {
+    createTodo() {
+      const store = this.get('store');
+
+      // Get the todo title set by the "New Todo" text field
+      var title = this.get('newTitle');
+
+      if (title &amp;&amp; !title.trim()) {
+        this.set('newTitle', '');
+        return;
+      }
+
+      // Create the new Todo model
+      var todo = store.createRecord('todo', {
+        title: title
+      });
+
+      // Clear the "New Todo" text field
+      this.set('newTitle', '');
+
+      // Save the new model
+      todo.save();
+    },
+
+  },
+
+});
+</pre>
+
+
+
+<p>
+Now, new todo items can be added from the home page.
+This controller will now respond to user action by using its newTitle property as the title of a new todo whose isCompleted property is false. Then it will clear its newTitle property which will synchronize to the template and reset the textfield. Finally, it persists any unsaved changes on the todo.
+</p>
+<p>
+You should now be able to add additional todos by entering a title in the &lt;input&gt; and hitting the &lt;enter&gt; key.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1.5.4" class="outline-4">
+<h4 id="sec-1.5.4"><span class="section-number-4">1.5.4</span> Refactoring the todos-route component into sub components </h4>
+<div class="outline-text-4" id="text-1.5.4">
+
+
+<p>
+This is a major refactor. We introduce 2 new components to take care of:
+</p>
+<p>
+todos-list &ndash; listing of todo items
+todo-item  &ndash; a single todo item
+</p></div>
+
+</div>
+
+<div id="outline-container-1.5.5" class="outline-4">
+<h4 id="sec-1.5.5"><span class="section-number-4">1.5.5</span> Generate the components </h4>
+<div class="outline-text-4" id="text-1.5.5">
+
+
+<p>
+First we generate the required components.
+</p>
+
+
+<pre class="example">ember generate component todos-list
+ember generate component todo-item
+</pre>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.5.6" class="outline-4">
+<h4 id="sec-1.5.6"><span class="section-number-4">1.5.6</span> Instantiate a todos-list component from the todos-route </h4>
+<div class="outline-text-4" id="text-1.5.6">
+
+
+<p>
+Replace the div as follows:
+</p>
+
+
+<pre class="example">&lt;div class="list-group-item"&gt;
+  {{todos-list todos=todos class='todo-list'}}
+&lt;/div&gt;
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.5.7" class="outline-4">
+<h4 id="sec-1.5.7"><span class="section-number-4">1.5.7</span> Update the template for the todos-list </h4>
+<div class="outline-text-4" id="text-1.5.7">
+
+
+<p>
+todos-list in turn should instantiate a list of todo-item components.
+Modify "app/templates/components/todos-list.hbs" to the follows:
+</p>
+
+
+<pre class="example">{{#each todos as |todo|}}
+  {{todo-item todo=todo}}
+{{/each}}
+</pre>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.5.8" class="outline-4">
+<h4 id="sec-1.5.8"><span class="section-number-4">1.5.8</span> Update the component code for todos-list </h4>
+<div class="outline-text-4" id="text-1.5.8">
+
+
+<p>
+Add the following line to the component exported in app/components/todos-list.js    
+</p>
+
+
+<pre class="example">tagName: 'ul'
+</pre>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.5.9" class="outline-4">
+<h4 id="sec-1.5.9"><span class="section-number-4">1.5.9</span> Update the template for todo-item </h4>
+<div class="outline-text-4" id="text-1.5.9">
+
+
+<p>
+todo-item template refers to how each row/todo entry should look like.
+Modify "app/templates/components/todo-item.hbs" to the follows:
+</p>
+
+
+<pre class="example">{{input type='checkbox' checked=todo.isCompleted class='toggle'}}
+&lt;label&gt;{{todo.title}}&lt;/label&gt;
+&lt;button class='btn btn-default btn-xs pull-right'&gt;
+&lt;span class="glyphicon glyphicon-remove" aria-hidden="true"&gt;&lt;/span&gt;
+&lt;/button&gt;
+&lt;br/&gt;
+</pre>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.5.10" class="outline-4">
+<h4 id="sec-1.5.10"><span class="section-number-4">1.5.10</span> Update the component code for todo-item </h4>
+<div class="outline-text-4" id="text-1.5.10">
+
+
+<p>
+Add the following line to the component exported in app/components/todo-item.js    
+tagName: 'li'
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1.5.11" class="outline-4">
+<h4 id="sec-1.5.11"><span class="section-number-4">1.5.11</span> Enabling strike through for completed items </h4>
+<div class="outline-text-4" id="text-1.5.11">
+
+<p>Edit app/templates/components/todo-item.hbs
+</p>
+<p>
+THE SECTION IN {{#if tod.isCompleted}} is the new addition
+</p>
+
+
+<pre class="example">{{#if isEditing}}
+  {{edit-todo class='edit' value=todo.title
+                           focus-out='save'
+                           insert-newline='save'}}
+{{else}}
+  {{input type='checkbox' checked=todo.isCompleted class='toggle' change=(action 'save') }}
+  {{#if todo.isCompleted}}
+      &lt;label {{action 'editTodo' on='doubleClick'}}&gt;&lt;del&gt;&lt;small&gt;&lt;em&gt;{{todo.title}}&lt;/em&gt;&lt;/small&gt;&lt;/del&gt;&lt;/label&gt;
+  {{else}}
+    &lt;label {{action 'editTodo' on='doubleClick'}}&gt;{{todo.title}}&lt;/label&gt;
+  {{/if}}
+
+  &lt;button  {{action 'removeTodo'}} class='btn btn-default btn-xs pull-right'&gt;
+  &lt;span class="glyphicon glyphicon-remove" aria-hidden="true"&gt;&lt;/span&gt;
+  &lt;/button&gt;
+{{/if}}
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.5.12" class="outline-4">
+<h4 id="sec-1.5.12"><span class="section-number-4">1.5.12</span> Displaying the number of todos left </h4>
+<div class="outline-text-4" id="text-1.5.12">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.5.13" class="outline-4">
+<h4 id="sec-1.5.13"><span class="section-number-4">1.5.13</span> Add the active variable in the todos-route component body </h4>
+<div class="outline-text-4" id="text-1.5.13">
+
+<p>Edit app/components/todos-route.js
+</p>
+
+
+
+<pre class="example">const {
+  inject: { service },
+  computed
+} = Ember;
+
+
+    active: computed.filterBy('todos', 'isCompleted', false),
+</pre>
+
+
+
+<p>
+This is a list of not yet completed tasks.
+Add computed to the Const section on the top of the file.
+Note: <a href="http://emberjs.com/api/classes/Ember.computed.html#method_filterBy">http://emberjs.com/api/classes/Ember.computed.html#method_filterBy</a>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1.5.14" class="outline-4">
+<h4 id="sec-1.5.14"><span class="section-number-4">1.5.14</span> Add an inflection computed property </h4>
+<div class="outline-text-4" id="text-1.5.14">
+
+
+
+
+<pre class="example">inflection: computed('active.[]', function() {
+  var al = this.get('active.length');
+  return al === 1 ? 'item' : 'items';
+}).readOnly(),
+</pre>
+
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.5.15" class="outline-4">
+<h4 id="sec-1.5.15"><span class="section-number-4">1.5.15</span> Update the template </h4>
+<div class="outline-text-4" id="text-1.5.15">
+
+<p>Edit app/templates/component/todos-route.hbs
+</p>
+
+
+<pre class="example">&lt;span&gt;
+  &lt;strong&gt;{{active.length}}&lt;/strong&gt; {{inflection}} left
+&lt;/span&gt;
+</pre>
+
+
+
+<p>
+now displays the correct values.
+</p></div>
+
+</div>
+
+<div id="outline-container-1.5.16" class="outline-4">
+<h4 id="sec-1.5.16"><span class="section-number-4">1.5.16</span> git "display model rewire UI" </h4>
+<div class="outline-text-4" id="text-1.5.16">
+
+
+
+
+<pre class="example">$ git add -A
+$ git commit -m "display model datrewire UI"
+</pre>
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1.6" class="outline-3">
+<h3 id="sec-1.6"><span class="section-number-3">1.6</span> Rewire for filters </h3>
+<div class="outline-text-3" id="text-1.6">
+
+
+</div>
+
+<div id="outline-container-1.6.1" class="outline-4">
+<h4 id="sec-1.6.1"><span class="section-number-4">1.6.1</span> Editing todos </h4>
+<div class="outline-text-4" id="text-1.6.1">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.6.2" class="outline-4">
+<h4 id="sec-1.6.2"><span class="section-number-4">1.6.2</span> Adding a new component </h4>
+<div class="outline-text-4" id="text-1.6.2">
+
+
+
+
+<pre class="example">ember generate component edit-todo
+</pre>
+
+
+
+<p>
+edit edit-todo.js
+</p>
+
+
+<pre class="example">import Ember from 'ember';
+
+export default Ember.TextField.extend({
+  didInsertElement() {
+    this.$().focus();
+    this.$().addClass('focus'); // headless testing is brittle
+  }
+});
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.6.3" class="outline-4">
+<h4 id="sec-1.6.3"><span class="section-number-4">1.6.3</span> Prepare todo-item template to call the new component </h4>
+<div class="outline-text-4" id="text-1.6.3">
+
+
+<p>
+edit todo-item.hbs
+</p>
+
+
+<pre class="example">{{#if isEditing}}
+  {{edit-todo class='edit' value=todo.title
+                           focus-out='save'
+                           insert-newline='save'}}
+{{else}}
+  {{input type='checkbox' checked=todo.isCompleted class='toggle' change=(action 'save') }}
+  &lt;label {{action 'editTodo' on='doubleClick'}}&gt;{{todo.title}}&lt;/label&gt;
+  &lt;button {{action 'removeTodo'}} class='destroy'&gt;&lt;/button&gt;
+{{/if}}
+</pre>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.6.4" class="outline-4">
+<h4 id="sec-1.6.4"><span class="section-number-4">1.6.4</span> Ready todo-item component to handle new actions </h4>
+<div class="outline-text-4" id="text-1.6.4">
+
+
+<p>
+Add a new classNameBinding -&gt; 'isEditing:editing'
+</p>
+
+
+<pre class="example">  /*
+init() {
+  this._super(...arguments);
+  this.set('isEditing', false);
+},
+*/
+actions: {
+  editTodo() {
+    this.set('isEditing', true);
+  },
+  /*
+  removeTodo() {
+    var todo = this.get('todo');
+
+    todo.deleteRecord();
+    todo.save();
+  },
+  */
+  save() {
+    this.set('isEditing', false);
+    this.get('todo').save();
+  }
+},
+</pre>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.6.5" class="outline-4">
+<h4 id="sec-1.6.5"><span class="section-number-4">1.6.5</span> Deleting todo items </h4>
+<div class="outline-text-4" id="text-1.6.5">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.6.6" class="outline-4">
+<h4 id="sec-1.6.6"><span class="section-number-4">1.6.6</span> Prepare removeTodo function in todo-item component code </h4>
+<div class="outline-text-4" id="text-1.6.6">
+
+<p>Uncomment the relevant code in todo-item.js
+</p>
+<p>
+edit todo-item.hbs and introduce action for button:
+</p>
+
+
+<pre class="example">{{#if isEditing}}
+  {{edit-todo class='edit' value=todo.title
+                           focus-out='save'
+                           insert-newline='save'}}
+{{else}}
+  {{input type='checkbox' checked=todo.isCompleted class='toggle' change=(action 'save') }}
+  {{#if todo.isCompleted}}
+      &lt;label {{action 'editTodo' on='doubleClick'}}&gt;&lt;del&gt;&lt;small&gt;&lt;em&gt;{{todo.title}}&lt;/em&gt;&lt;/small&gt;&lt;/del&gt;&lt;/label&gt;
+  {{else}}
+    &lt;label {{action 'editTodo' on='doubleClick'}}&gt;{{todo.title}}&lt;/label&gt;
+  {{/if}}
+
+  &lt;button  {{action 'removeTodo'}} class='btn btn-default btn-xs pull-right'&gt;
+  &lt;span class="glyphicon glyphicon-remove" aria-hidden="true"&gt;&lt;/span&gt;
+  &lt;/button&gt;
+{{/if}}
+
+</pre>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.6.7" class="outline-4">
+<h4 id="sec-1.6.7"><span class="section-number-4">1.6.7</span> Creating multiple pages with persistent filtering </h4>
+<div class="outline-text-4" id="text-1.6.7">
+
+</div>
+
+</div>
+
+<div id="outline-container-1.6.8" class="outline-4">
+<h4 id="sec-1.6.8"><span class="section-number-4">1.6.8</span> Enable controller to accept query params </h4>
+<div class="outline-text-4" id="text-1.6.8">
+
+<p>Create the application controller (/app/application/controller.js)
+</p>
+
+
+<pre class="example">import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  queryParams: ['filter'],
+  filter: 'all',
+});
+</pre>
+
+
+
+<p>
+Allows you to pass queries in url like ?filter=&lt;value&gt;.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1.6.9" class="outline-4">
+<h4 id="sec-1.6.9"><span class="section-number-4">1.6.9</span> Pass in the obtained query params to the main component to work with: </h4>
+<div class="outline-text-4" id="text-1.6.9">
+
+
+<p>
+In templates/application.hbs (where we init the todos-route component) &ndash;&gt;
+</p>
+
+
+<pre class="example">Replace:
+{{ todos-route todos=model }}
+
+with
+{{ todos-route todos=model filter=filter }}
+</pre>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.6.10" class="outline-4">
+<h4 id="sec-1.6.10"><span class="section-number-4">1.6.10</span> Use filter value to compute the list of todos to be diaplyed in todos-route component </h4>
+<div class="outline-text-4" id="text-1.6.10">
+
+
+<p>
+(/app/components/todos-route.js) 
+</p>
+<p>
+First we create 2 helper computed properties:
+</p>
+
+
+<pre class="example">active: computed.filterBy('todos', 'isCompleted', false), 
+completed: computed.filterBy('todos', 'isCompleted', true),
+</pre>
+
+
+
+<p>
+Add the actual computed property that is the filtered list:
+</p>
+
+
+<pre class="example">  queriedTodos: computed('todos', 'filter', function() {
+  //use anything and return 
+  var tlist = this.get('todos');
+  var f = this.get('filter');
+
+  if(f === 'all'){
+    return tlist
+  }
+  else if(f === 'completed'){
+      return this.get('completed')
+  }
+  else if(f === 'active'){
+      return this.get('active')
+  }
+  else{
+    // inform the user probably
+      return tlist  
+  }
+}),
+</pre>
+
+
+
+<p>
+that uses the 'filter' input.
+</p>
+<p>
+OR
+</p>
+<p>
+instead of maintaining permanent seperate lists, we can compute lists on the fly like so:
+</p>
+<p>
+&lt;originallist&gt;.filterBy('&lt;value&gt;', &lt;bool val&gt;)
+</p>
+<p>
+This would run everytime you switch between filters. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1.6.11" class="outline-4">
+<h4 id="sec-1.6.11"><span class="section-number-4">1.6.11</span> Update the input to the inner display component 'todos-list' to the filtered list </h4>
+<div class="outline-text-4" id="text-1.6.11">
+
+
+<p>
+In todos-route.hbs file
+</p>
+
+
+<pre class="example">modify this:
+{{todos-list todos=todos class='todo-list'}}
+
+with:
+{{todos-list todos=queriedTodos class='todo-list'}}
+</pre>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.6.12" class="outline-4">
+<h4 id="sec-1.6.12"><span class="section-number-4">1.6.12</span> Update the links from todos-route template to use this new tech </h4>
+<div class="outline-text-4" id="text-1.6.12">
+
+
+
+
+<pre class="example">&lt;a href="active"&gt;Active&lt;/a&gt;
+now becomes
+{{ link-to 'Active' 'index' (query-params filter='active') activeClass='selected' }}
+</pre>
+
+
+
+<p>
+Simillarly for 'all' and 'completed'
+</p>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.6.13" class="outline-4">
+<h4 id="sec-1.6.13"><span class="section-number-4">1.6.13</span> git "display filters" </h4>
+<div class="outline-text-4" id="text-1.6.13">
+
+
+
+
+<pre class="example">$ git add -A
+$ git commit -m "display filters"
+</pre>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1.7" class="outline-3">
+<h3 id="sec-1.7"><span class="section-number-3">1.7</span> Last few steps </h3>
+<div class="outline-text-3" id="text-1.7">
+
+
+</div>
+
+<div id="outline-container-1.7.1" class="outline-4">
+<h4 id="sec-1.7.1"><span class="section-number-4">1.7.1</span> Clearing all completed todos </h4>
+<div class="outline-text-4" id="text-1.7.1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1.7.2" class="outline-4">
+<h4 id="sec-1.7.2"><span class="section-number-4">1.7.2</span> Add the UI template </h4>
+<div class="outline-text-4" id="text-1.7.2">
+
+<p>For a button/link to clear out completed items
+todos-route.hbs
+</p>
+
+
+<pre class="example"> &lt;span class="btn btn-default pull-right"&gt;
+  {{#if completed}}
+    &lt;button {{action "clearCompleted"}}&gt;
+    Clear completed ({{completed.length}})
+    &lt;/button&gt;
+  {{/if}}
+&lt;/span&gt;
+</pre>
+
+
+
+
+<p>
+also take care of css to position the link in the correct place
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1.7.3" class="outline-4">
+<h4 id="sec-1.7.3"><span class="section-number-4">1.7.3</span> Add the clearCompleted action </h4>
+<div class="outline-text-4" id="text-1.7.3">
+
+
+<p>
+in todos-route.js
+</p>
+
+
+<pre class="example">clearCompleted() {
+    this.get('completed').invoke('deleteRecord')
+},
+</pre>
+
+
+
+<p>
+However this is not working as per expectation
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1.7.4" class="outline-4">
+<h4 id="sec-1.7.4"><span class="section-number-4">1.7.4</span> One shot global completed status toggle </h4>
+<div class="outline-text-4" id="text-1.7.4">
+
+</div>
+
+</div>
+
+<div id="outline-container-1.7.5" class="outline-4">
+<h4 id="sec-1.7.5"><span class="section-number-4">1.7.5</span> Add the global check box </h4>
+<div class="outline-text-4" id="text-1.7.5">
+
+<p>In todos-route.hbs
+</p>
+
+
+
+<pre class="example">&lt;span class='input-group-addon'&gt;
+  {{input type='checkbox' checked=areAllCompleted aria-label="..." change=(action 'toggleAll') }}
+&lt;/span&gt;
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.7.6" class="outline-4">
+<h4 id="sec-1.7.6"><span class="section-number-4">1.7.6</span> Give the component the tech to mark and identify marked state </h4>
+<div class="outline-text-4" id="text-1.7.6">
+
+<p>in todos-route.js
+First, a variable to find if all entries are marked todo
+</p>
+
+
+<pre class="example">areAllCompleted: computed('active.[]', function(){
+return this.get('active.length') === 0
+}),
+</pre>
+
+
+
+<p>
+And a way to toggle states of all checkboxes
+</p>
+
+
+<pre class="example">toggleAll() {
+    var checkState = this.get('areAllCompleted')
+  
+    this.get('todos').setEach('isCompleted', checkState)
+    this.get('todos').invoke('save')
+}
+</pre>
+
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.7.7" class="outline-4">
+<h4 id="sec-1.7.7"><span class="section-number-4">1.7.7</span> git "almost done" </h4>
+<div class="outline-text-4" id="text-1.7.7">
+
+
+
+
+<pre class="example">$ git add -A
+$ git commit -m "display filters"
+</pre>
+
+
+
+
+</div>
+</div>
+</div>
+</div>
+<div id="postamble">
+<p class="author"> Author: R GOVINDARAJAN
+<a href="mailto:govidat@govidat-Inspiron-3537">&lt;govidat@govidat-Inspiron-3537&gt;</a>
+</p>
+<p class="date"> Date: 2015-11-09 17:52:53 IST</p>
+<p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
+</div>
+</div>
+</body>
+</html>
